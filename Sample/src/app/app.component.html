@@ -1,0 +1,52 @@
+
+<h2>Parent to child communication</h2>
+
+<div class="row">
+<h5>Parent  Component</h5>
+  <div class="col-6">
+
+    <div class="jumbotron ml-5 mt-5 bg-warning">
+      <input type="text" #ref>
+      <button type="button" (click)="datatoChild(ref.value)">add</button>
+
+      {{get}}
+    </div>
+  </div>
+  <h5>Child  Component</h5>
+  <div class="col-6 mt-5">
+    <div class="jumbotron mr-5 bg-lite">
+      <app-child (custEvent)="readChild($event)" [childData]="parentData"></app-child>
+    </div>
+  </div>
+</div>
+<br>
+<h2>Dispaly API Data</h2>
+<div *ngFor = "let data of getData" class="container">
+  {{data.Field}} - {{data.Value}}
+ </div>
+
+ <h2>Dynamic control adding with switch cases </h2>
+
+ <form [formGroup]="myFormGroup" (ngSubmit)="onSubmit()">
+  <div *ngFor="let form_elem of formTemplate">
+  <div [ngSwitch]="form_elem.type">
+    <div *ngSwitchCase="'textBox'">
+      <label>{{form_elem.label}}</label>
+      <input type="text" formControlName="{{form_elem.label}}"/>
+    </div>
+    <div *ngSwitchCase="'number'">
+      <label>{{form_elem.label}}</label>
+      <input type="number" formControlName="{{form_elem.label}}"/>
+    </div>
+    <div *ngSwitchCase="'select'">
+      <label>{{form_elem.label}}</label>
+      <select formControlName="{{form_elem.label}}">
+        <option *ngFor="let opt of form_elem.options">
+          {{opt}}
+        </option>
+      </select>
+    </div>
+  </div>  
+  </div>
+  <input type="submit" value="save"/>
+</form>
